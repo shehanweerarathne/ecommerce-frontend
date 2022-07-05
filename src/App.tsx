@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import Catalog from "./components/catalog/Catalog"
 import {Container, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import {BrowserRouter,Routes,Route} from "react-router-dom";
-
+import {Routes,Route} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Header from "./components/header/Header";
 import HomePage from "./pages/home/HomePage";
 import ProductDetails from "./components/catalog/ProductDetails";
 import AboutPage from "./pages/about/AboutPage";
 import ContactPage from "./pages/contact/ContactPage";
+import NotFound from "./components/errors/NotFound";
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   const [darkMode,setDarkMode] = useState(false);
@@ -27,8 +29,10 @@ function App() {
 
   return (
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
+          <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
+          <CssBaseline/>
         <Header darkMode={darkMode} handleThemeChange={handleThemeChange}/>
+        <br/><br/><br/>
         <Container>
           <Routes>
             <Route path={'/'} element={<HomePage/>}/>
@@ -36,6 +40,7 @@ function App() {
             <Route path={'/catalog/:id'} element={<ProductDetails/>}/>
             <Route path={'/about'} element={<AboutPage/>}/>
             <Route path={'/contact'} element={<ContactPage/>}/>
+              <Route  element={<NotFound/>} />
           </Routes>
         </Container>
 
