@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Badge, AppBar, IconButton, List, ListItem, Toolbar, Typography, Box, Switch, Drawer, Button, Divider, ListItemButton, ListItemText
 } from "@mui/material";
 import {Link, NavLink} from "react-router-dom";
 import {ShoppingCart} from "@mui/icons-material";
 import MenuIcon from '@mui/icons-material/Menu';
+import {useStoreContext} from "../../context/StoreContext";
 
 
 interface Props{
@@ -29,6 +30,14 @@ const navStyles={
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
 const Header = ({darkMode,handleThemeChange,window}:Props) => {
+    const {basket} = useStoreContext();
+
+
+    let itemCount = 0;
+   if(basket){
+       itemCount = basket.items.reduce((sum, item) => sum + item.quantity, 0)
+   }
+
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -107,7 +116,7 @@ const Header = ({darkMode,handleThemeChange,window}:Props) => {
                     {/*</Box>*/}
                     <Box display={'flex'} alignItems={'center'}>
                         <IconButton component={Link} to={'/basket'} size={'large'} sx={{color: 'inherit'}}>
-                            <Badge badgeContent={4} color={'secondary'}>
+                            <Badge badgeContent={itemCount} color={'secondary'}>
                                 <ShoppingCart/>
                             </Badge>
                         </IconButton>

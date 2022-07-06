@@ -1,15 +1,13 @@
-import React,{ createContext, PropsWithChildren, useContext, useState } from 'react';
-import {Basket} from "../../models/basket";
+import React, {createContext, PropsWithChildren, useContext, useState} from 'react';
+import {Basket} from "../models/basket";
 
 interface StoreContextValue {
     basket: Basket | null;
     setBasket: (basket: Basket) => void;
     removeItem: (productId: string, quantity: number) => void;
 }
-
 export const StoreContext = createContext<StoreContextValue | undefined>(undefined);
-
-export const seStoreContext = () => {
+export const useStoreContext = () => {
     const context = useContext(StoreContext);
 
     if (context === undefined) {
@@ -19,10 +17,9 @@ export const seStoreContext = () => {
     return context;
 }
 
-export const StoreProvider = ({children}:PropsWithChildren<any>) => {
+export const StoreProvider = ({children}: PropsWithChildren<any>) => {
     const [basket, setBasket] = useState<Basket | null>(null);
-
-    const removeItem = (productId:string,quantity:number) => {
+    const removeItem = (productId: string, quantity: number) => {
         if (!basket) return;
         const items = [...basket.items];
         const itemIndex = items.findIndex(i => i.productId === productId);
@@ -34,9 +31,11 @@ export const StoreProvider = ({children}:PropsWithChildren<any>) => {
             })
         }
     }
+
     return (
         <StoreContext.Provider value={{basket, setBasket, removeItem}}>
             {children}
         </StoreContext.Provider>
     )
+  
 }
