@@ -4,16 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
-import axios from "axios";
+import {StoreProvider} from "./components/context/StoreContext";
 
-axios.defaults.baseURL ='https://localhost:7194/api/'
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
       <BrowserRouter>
+          <StoreProvider>
           <App />
+          </StoreProvider>
       </BrowserRouter>
 
   </React.StrictMode>
